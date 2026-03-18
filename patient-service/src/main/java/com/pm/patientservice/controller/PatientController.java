@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.UUID;
 @RequestMapping("/patients")
 @Tag(name = "Patient", description = "API for managing patients")
 public class PatientController {
+    private static final Logger log = LoggerFactory.getLogger(PatientController.class);
     private final PatientService patientService;
 
     public PatientController(PatientService patientService) {
@@ -28,6 +31,7 @@ public class PatientController {
     @GetMapping
     @Operation(summary = "get patients")
     public ResponseEntity<List<PatientResponseDTO>> getPatients() {
+        log.info("reached here");
         List<PatientResponseDTO> patients = patientService.getPatients();
         return ResponseEntity.ok().body(patients);
     }
